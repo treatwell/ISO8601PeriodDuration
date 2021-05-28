@@ -42,9 +42,8 @@ DateComponents
 
 ## Author Information
 
-[David Roman](https://github.com/davdroman) - david.roman@treatwell.com
+[David Roman](https://github.com/davdroman) - d@vidroman.dev
 
 ## License
 
 The contents of this repository are [licensed](LICENSE) under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
