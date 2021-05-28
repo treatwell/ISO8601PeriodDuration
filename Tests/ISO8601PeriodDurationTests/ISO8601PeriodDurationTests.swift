@@ -22,6 +22,13 @@ final class ISO8601PeriodDurationTests: XCTestCase {
         try assertDecodingFailure(nullPayload())
         try assertDecodingFailure(missingPayload())
     }
+
+    func testOptionalDecoding() throws {
+        try assertOptionalDecodingSuccess(validPayload(), DateComponents(day: 3))
+        try assertOptionalDecodingFailure(invalidPayload())
+        try assertOptionalDecodingSuccess(nullPayload(), nil)
+        try assertOptionalDecodingSuccess(missingPayload(), nil)
+    }
 }
 
 private extension ISO8601PeriodDurationTests {
@@ -40,6 +47,34 @@ private extension ISO8601PeriodDurationTests {
     func assertDecodingFailure(_ payload: Data, line: UInt = #line) throws {
         try XCTAssertThrowsError(
             JSONDecoder().decode(DecodableModel.self, from: payload),
+            line: line
+        ) { error in
+            switch error {
+            case is DecodingError:
+                break
+            default:
+                XCTFail("Unexpected error of type '\(type(of: error))' received", line: line)
+            }
+        }
+    }
+}
+
+private extension ISO8601PeriodDurationTests {
+    private struct OptionalDecodableModel: Decodable {
+        @OptionalISO8601PeriodDuration var duration: DateComponents?
+    }
+
+    func assertOptionalDecodingSuccess(_ payload: Data, _ dateComponents: DateComponents?, line: UInt = #line) throws {
+        try XCTAssertEqual(
+            JSONDecoder().decode(OptionalDecodableModel.self, from: payload).duration,
+            dateComponents,
+            line: line
+        )
+    }
+
+    func assertOptionalDecodingFailure(_ payload: Data, line: UInt = #line) throws {
+        try XCTAssertThrowsError(
+            JSONDecoder().decode(OptionalDecodableModel.self, from: payload),
             line: line
         ) { error in
             switch error {

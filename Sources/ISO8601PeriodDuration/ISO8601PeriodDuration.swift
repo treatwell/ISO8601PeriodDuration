@@ -43,3 +43,29 @@ extension ISO8601PeriodDuration: Decodable {
         self = duration
     }
 }
+
+@propertyWrapper
+public struct OptionalISO8601PeriodDuration: Equatable {
+    public var wrappedValue: DateComponents?
+
+    public init(_ wrappedValue: DateComponents?) {
+        self.wrappedValue = wrappedValue
+    }
+}
+
+extension OptionalISO8601PeriodDuration: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if container.decodeNil() {
+            self.init(nil)
+        } else {
+            self.init(try ISO8601PeriodDuration(from: decoder).wrappedValue)
+        }
+    }
+}
+
+extension KeyedDecodingContainer {
+    public func decode(_ type: OptionalISO8601PeriodDuration.Type, forKey key: Self.Key) throws -> OptionalISO8601PeriodDuration {
+        try decodeIfPresent(type, forKey: key) ?? OptionalISO8601PeriodDuration(nil)
+    }
+}
