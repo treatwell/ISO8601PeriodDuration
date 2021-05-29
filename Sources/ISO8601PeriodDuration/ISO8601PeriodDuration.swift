@@ -48,12 +48,7 @@ public struct OptionalISO8601PeriodDuration: Equatable {
 
 extension OptionalISO8601PeriodDuration: Decodable {
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if container.decodeNil() {
-            self.init(nil)
-        } else {
-            self.init(try ISO8601PeriodDuration(from: decoder).wrappedValue)
-        }
+        self.init(try ISO8601PeriodDuration(from: decoder).wrappedValue)
     }
 }
 
