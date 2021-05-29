@@ -191,7 +191,10 @@ final class DateComponents_ISO8601Tests: XCTestCase {
 
 private extension DateComponents_ISO8601Tests {
     func assert(_ rawValue: String, _ dateComponents: DateComponents?, line: UInt = #line) {
-        XCTAssertEqual(DateComponents(rawISO8601PeriodDurationValue: rawValue), dateComponents, line: line)
-        XCTAssertEqual(ISO8601PeriodDuration(rawValue: rawValue)?.wrappedValue, dateComponents, line: line)
+        XCTAssertEqual(
+            DateComponents(rawISO8601PeriodDurationValue: rawValue),
+            dateComponents,
+            line: line
+        )
     }
 }

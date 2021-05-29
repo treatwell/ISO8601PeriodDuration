@@ -21,26 +21,19 @@ public struct ISO8601PeriodDuration: Equatable {
     public init(_ wrappedValue: DateComponents) {
         self.wrappedValue = wrappedValue
     }
-
-    public init?(rawValue: String) {
-        guard let wrappedValue = DateComponents(rawISO8601PeriodDurationValue: rawValue) else {
-            return nil
-        }
-        self.init(wrappedValue)
-    }
 }
 
 extension ISO8601PeriodDuration: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
-        guard let duration = Self.init(rawValue: rawValue) else {
+        guard let dateComponents = DateComponents(rawISO8601PeriodDurationValue: rawValue) else {
             throw DecodingError.dataCorruptedError(
                 in: container,
                 debugDescription: "Invalid `rawValue` for ISO8601PeriodDuration decoding: '\(rawValue)'"
             )
         }
-        self = duration
+        self.init(dateComponents)
     }
 }
 
