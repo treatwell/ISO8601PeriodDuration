@@ -8,7 +8,7 @@ on:
 
 jobs:
   CI:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         action: [build, test]
@@ -22,4 +22,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: ${{ matrix.action }}
-      run: set -o pipefail && swift ${{ matrix.action }} 2>&1 | xcpretty
+      run: swift ${{ matrix.action }}

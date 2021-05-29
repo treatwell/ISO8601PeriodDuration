@@ -173,25 +173,14 @@ final class DateComponents_ISO8601Tests: XCTestCase {
         assert("PT32H ", nil)
         assert(" PT32H ", nil)
     }
-
-    static var allTests = [
-        ("testFull", testFull),
-        ("testPeriod", testPeriod),
-        ("testYear", testYear),
-        ("testMonth", testMonth),
-        ("testWeek", testWeek),
-        ("testDay", testDay),
-        ("testDuration", testDuration),
-        ("testHour", testHour),
-        ("testMinute", testMinute),
-        ("testSecond", testSecond),
-        ("testEdgeCases", testEdgeCases),
-    ]
 }
 
 private extension DateComponents_ISO8601Tests {
     func assert(_ rawValue: String, _ dateComponents: DateComponents?, line: UInt = #line) {
-        XCTAssertEqual(DateComponents(rawISO8601PeriodDurationValue: rawValue), dateComponents, line: line)
-        XCTAssertEqual(ISO8601PeriodDuration(rawValue: rawValue)?.wrappedValue, dateComponents, line: line)
+        XCTAssertEqual(
+            DateComponents(rawISO8601PeriodDurationValue: rawValue),
+            dateComponents,
+            line: line
+        )
     }
 }
