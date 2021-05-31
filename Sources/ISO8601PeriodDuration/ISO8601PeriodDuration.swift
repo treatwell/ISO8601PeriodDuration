@@ -15,7 +15,7 @@
 import Foundation
 
 @propertyWrapper
-public struct ISO8601PeriodDuration: Equatable {
+public struct ISO8601PeriodDuration: Hashable {
     public var wrappedValue: DateComponents
 
     public init(_ wrappedValue: DateComponents) {
@@ -38,7 +38,7 @@ extension ISO8601PeriodDuration: Decodable {
 }
 
 @propertyWrapper
-public struct OptionalISO8601PeriodDuration: Equatable {
+public struct OptionalISO8601PeriodDuration: Hashable {
     public var wrappedValue: DateComponents?
 
     public init(_ wrappedValue: DateComponents?) {
